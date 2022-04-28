@@ -1,4 +1,6 @@
 class Prescription < ApplicationRecord
+  enum for_adult_children: {:for_adult=>0, :for_children=>1}
+
   belongs_to :user
   has_one :product
 

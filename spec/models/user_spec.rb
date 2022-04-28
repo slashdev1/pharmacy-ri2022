@@ -1,12 +1,19 @@
 require 'rails_helper'
 
 RSpec.describe User, type: :model do
-  describe 'default user details' do
-    let(:user) { User.new(name: 'Alex Doc', role: 2) }
+  let(:user) { create :user }
 
-    it 'should initialize worker with name and role' do
-      expect(user.name).to eq("Alex Doc")
-      expect(user.role_id).to eq(2)
+  it 'should initialize user with role and name' do
+    expect(user.role_id).to eq(1)
+    expect(user.name).to eq('Фармацевт Аня')
+  end
+
+  context 'when user isn\'t valid' do
+    let(:no_valid_name_user) { build :no_valid_name_user }
+
+    it 'is not valid with short name' do
+
+      expect(no_valid_name_user).to_not be_valid
     end
   end
 end
