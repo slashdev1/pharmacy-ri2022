@@ -1,0 +1,25 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Arrivals</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @arrivals.each do |arrival| %>
+      <tr>
+        <td><%= link_to 'Show', arrival %></td>
+        <td><%= link_to 'Edit', edit_arrival_path(arrival) %></td>
+        <td><%= link_to 'Destroy', arrival, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Arrival', new_arrival_path %>

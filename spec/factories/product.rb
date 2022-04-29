@@ -11,4 +11,16 @@ FactoryBot.define do
     price { 50 }
     for_adult_children { 0 }
   end
+  factory :product, class: Product do
+    name  { 'Біоспорин' }
+    required_prescription { true }
+    price { 250 }
+    for_adult_children { 0 }
+  end
+  factory :invalid_product, class: Product do
+    name  { 'Б' }
+    required_prescription { false }
+    price { 0 }
+    for_adult_children { 2 }
+  end
 end

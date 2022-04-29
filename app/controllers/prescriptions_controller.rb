@@ -13,6 +13,7 @@ class PrescriptionsController < ApplicationController
   # GET /prescriptions/new
   def new
     @prescription = Prescription.new
+    raise 'Failed to edit prescription' #Викликати помилку за допомогою raise в методі контроллера
   end
 
   # GET /prescriptions/1/edit
