@@ -1,0 +1,24 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Number:</strong>
+  <%= @prescription.number %>
+</p>
+
+<p>
+  <strong>Is used:</strong>
+  <%= @prescription.is_used %>
+</p>
+
+<p>
+  <strong>Doctor:</strong>
+  <%= @prescription.doctor_id %>
+</p>
+
+<p>
+  <strong>For adult children:</strong>
+  <%= @prescription.for_adult_children %>
+</p>
+
+<%= link_to 'Edit', edit_prescription_path(@prescription) %> |
+<%= link_to 'Back', prescriptions_path %>
