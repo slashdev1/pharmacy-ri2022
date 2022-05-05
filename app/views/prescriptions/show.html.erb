@@ -1,22 +1,23 @@
+<%= provide :page_title, @prescription.number %>
 <p id="notice"><%= notice %></p>
 
 <p>
-  <strong>Number:</strong>
+  <strong>Номер:</strong>
   <%= @prescription.number %>
 </p>
 
 <p>
-  <strong>Is used:</strong>
+  <strong>Використаний:</strong>
   <%= @prescription.is_used %>
 </p>
 
 <p>
-  <strong>Doctor:</strong>
+  <strong>Лікар:</strong>
   <%= @prescription.doctor_id %>
 </p>
 
 <p>
-  <strong>For adult children:</strong>
+  <strong>Для дорослих/дітей:</strong>
   <%= @prescription.for_adult_children %>
 </p>
 

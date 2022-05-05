@@ -53,18 +53,19 @@ ActiveRecord::Schema.define(version: 2022_04_22_135411) do
 
   create_table "prescriptions", force: :cascade do |t|
     t.string "number", null: false
-    t.boolean "is_used", null: false
+    t.boolean "is_used", default: false, null: false
     t.bigint "doctor_id", null: false
     t.integer "for_adult_children", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["doctor_id"], name: "index_prescriptions_on_doctor_id"
+    t.index ["number"], name: "index_prescriptions_on_number", unique: true
   end
 
   create_table "products", force: :cascade do |t|
     t.string "name", null: false
-    t.boolean "required_prescription", null: false
     t.decimal "price", precision: 15, scale: 2, null: false
+    t.boolean "required_prescription", null: false
     t.integer "for_adult_children", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false

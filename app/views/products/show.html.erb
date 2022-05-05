@@ -1,4 +1,25 @@
+<%= provide :page_title, @product.name %>
 <p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Назва:</strong>
+  <%= @product.name %>
+</p>
+
+<p>
+  <strong>Ціна:</strong>
+  <%= @product.price %>
+</p>
+
+<p>
+  <strong>Потребує рецепту:</strong>
+  <%= @product.required_prescription %>
+</p>
+
+<p>
+  <strong>Для дорослих/дітей:</strong>
+  <%= @product.for_adult_children %>
+</p>
 
 <%= link_to 'Edit', edit_product_path(@product) %> |
 <%= link_to 'Back', products_path %>

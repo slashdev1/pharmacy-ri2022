@@ -23,12 +23,12 @@
 
   <div class="field">
     <%= form.label :price %>
-    <%= form.number_field :price %>
+    <%= form.number_field :price, value: number_to_currency(form.object.price.to_f, delimiter: '', unit: ''), step: :any %>
   </div>
 
   <div class="field">
     <%= form.label :for_adult_children %>
-    <%= form.select :for_adult_children, options_for_select(Product.for_adult_children.map {|key, value| [key.titleize, Product.for_adult_children.key(value)]}, @product.for_adult_children) %>
+    <%= form.select :for_adult_children, options_for_select(Product.get_for_adult_children_array, product.for_adult_children) %>
   </div>
 
   <div class="actions">

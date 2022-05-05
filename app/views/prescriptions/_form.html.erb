@@ -23,12 +23,12 @@
 
   <div class="field">
     <%= form.label :doctor_id %>
-    <%= form.text_field :doctor_id %>
+    <%= form.select :doctor_id, options_for_select(User.is_doctor.map {|key| [key.name, key.id]}, :doctor_id) %>
   </div>
 
   <div class="field">
     <%= form.label :for_adult_children %>
-    <%= form.number_field :for_adult_children %>
+    <%= form.select :for_adult_children, options_for_select(Prescription.for_adult_children.map {|key, value| [key.titleize, Prescription.for_adult_children.key(value)]}, :for_adult_children) %>
   </div>
 
   <div class="actions">
