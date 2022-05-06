@@ -55,6 +55,6 @@ class PrescriptionsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def prescription_params
-      params.require(:prescription).permit(:number, :is_used, :doctor_id, :for_adult_children)
+      params.require(:prescription).permit(:number, :is_used, :doctor_id, :product_id, :for_adult_children)
     end
 end
