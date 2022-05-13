@@ -3,7 +3,7 @@ class OrdersController < ApplicationController
 
   # GET /orders
   def index
-    @orders = Order.all
+    @orders = policy_scope(Order) #Order.all
   end
 
   # GET /orders/1

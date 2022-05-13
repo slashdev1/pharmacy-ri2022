@@ -11,9 +11,3 @@
     order.name = name
     order.save
 }
-
-['Пользователь', 'Фармацевт', 'Доктор'].each {|name|
-    order = Role.new
-    order.name = name
-    order.save
-}

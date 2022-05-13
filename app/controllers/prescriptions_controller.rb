@@ -13,6 +13,7 @@ class PrescriptionsController < ApplicationController
   # GET /prescriptions/new
   def new
     @prescription = Prescription.new
+    authorize @prescription
     #raise 'Failed to edit prescription' #Викликати помилку за допомогою raise в методі контроллера
   end
 
@@ -23,8 +24,8 @@ class PrescriptionsController < ApplicationController
   # POST /prescriptions
   def create
     @prescription = Prescription.new(prescription_params)
+    authorize @prescription
 
-    #binding.irb
     if @prescription.save
       redirect_to @prescription, notice: 'Prescription was successfully created.'
     else
@@ -34,6 +35,8 @@ class PrescriptionsController < ApplicationController
 
   # PATCH/PUT /prescriptions/1
   def update
+    authorize @prescription
+
     if @prescription.update(prescription_params)
       redirect_to @prescription, notice: 'Prescription was successfully updated.'
     else
