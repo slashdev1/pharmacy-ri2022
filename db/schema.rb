@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_04_22_135411) do
+ActiveRecord::Schema.define(version: 2022_05_06_120332) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -53,12 +53,15 @@ ActiveRecord::Schema.define(version: 2022_04_22_135411) do
 
   create_table "prescriptions", force: :cascade do |t|
     t.string "number", null: false
-    t.boolean "is_used", null: false
+    t.boolean "is_used", default: false, null: false
     t.bigint "doctor_id", null: false
     t.integer "for_adult_children", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.bigint "product_id", null: false
     t.index ["doctor_id"], name: "index_prescriptions_on_doctor_id"
+    t.index ["number"], name: "index_prescriptions_on_number", unique: true
+    t.index ["product_id"], name: "index_prescriptions_on_product_id"
   end
 
   create_table "products", force: :cascade do |t|
@@ -98,6 +101,7 @@ ActiveRecord::Schema.define(version: 2022_04_22_135411) do
   add_foreign_key "order_details", "products"
   add_foreign_key "orders", "order_statuses"
   add_foreign_key "orders", "users"
+  add_foreign_key "prescriptions", "products"
   add_foreign_key "prescriptions", "users", column: "doctor_id"
   add_foreign_key "stock", "products"
   add_foreign_key "users", "roles"

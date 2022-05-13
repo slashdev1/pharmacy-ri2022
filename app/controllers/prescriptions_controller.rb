@@ -13,7 +13,7 @@ class PrescriptionsController < ApplicationController
   # GET /prescriptions/new
   def new
     @prescription = Prescription.new
-    raise 'Failed to edit prescription' #Викликати помилку за допомогою raise в методі контроллера
+    #raise 'Failed to edit prescription' #Викликати помилку за допомогою raise в методі контроллера
   end
 
   # GET /prescriptions/1/edit
@@ -24,6 +24,7 @@ class PrescriptionsController < ApplicationController
   def create
     @prescription = Prescription.new(prescription_params)
 
+    #binding.irb
     if @prescription.save
       redirect_to @prescription, notice: 'Prescription was successfully created.'
     else
@@ -54,6 +55,6 @@ class PrescriptionsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def prescription_params
-      params.require(:prescription).permit(:number, :is_used, :doctor_id, :for_adult_children)
+      params.require(:prescription).permit(:number, :is_used, :doctor_id, :product_id, :for_adult_children)
     end
 end
