@@ -1,0 +1,25 @@
+<%= provide :page_title, @user.name %>
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Ім'я:</strong>
+  <%= @user.name %>
+</p>
+
+<p>
+  <strong>Роль:</strong>
+  <%= @user.role %>
+</p>
+
+<p>
+  <strong>Email:</strong>
+  <%= @user.email %>
+</p>
+
+<p>
+  <strong>Дата реєстрації:</strong>
+  <%= @user.created_at %>
+</p>
+
+<%= link_to 'Edit', edit_user_path(@user) %> |
+<%= link_to 'Back', users_path %>
