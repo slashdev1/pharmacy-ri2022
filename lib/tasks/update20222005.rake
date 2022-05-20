@@ -1,5 +1,5 @@
 namespace :update20222005 do
-  desc "TODO"
+  desc "transition new filed role in model User"
   task do: :environment do
 
     User.all.each do |user|
