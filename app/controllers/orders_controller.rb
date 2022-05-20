@@ -12,6 +12,9 @@ class OrdersController < ApplicationController
 
   # GET /orders/new
   def new
+    if !user_signed_in?
+      raise NotImplementedError, "You must be authorized!"
+    end
     @order = Order.new
   end
 
@@ -21,9 +24,19 @@ class OrdersController < ApplicationController
 
   # POST /orders
   def create
+    Rails.logger.info 'Creating new order with params: #{order_params.inspect}'
     @order = Order.new(order_params)
+    @order.user = current_user#User.all.sample #current_user #
+    #@order.order_status = OrderStatus.find_by(name: 'Подготовлен')
+    @order.order_status_id = 1
+    @order.amount = 0
+    order_params[:order_details_attributes].each do |k,v|
+      @order.amount += v[:qty].to_i*v[:price].to_i
+    end
 
     if @order.save
+      Rails.logger.info 'Created order ##{@order.id}'
+      OrderMailer.with(user: @user).order_placed.deliver_later
       redirect_to @order, notice: 'Order was successfully created.'
     else
       render :new
@@ -53,6 +66,6 @@ class OrdersController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def order_params
-      params.fetch(:order, {})
+      params.fetch(:order, {}).permit( order_details_attributes: [:product_id, :qty, :price, :_destroy])
     end
 end

@@ -1,0 +1,11 @@
+<html>
+<head>
+  <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+</head>
+<body>
+  <h1>Welcome to <%= @site_url %>, <%= @user.name %></h1>
+  <p>
+    To login to the site, just follow this link: <%= @login_url %>.
+  </p>
+</body>
+</html>

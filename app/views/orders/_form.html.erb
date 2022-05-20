@@ -11,6 +11,19 @@
     </div>
   <% end %>
 
+  <div class="group">
+    <fieldset>
+      <legend>Details:</legend>
+      <%= form.fields_for :order_details do |details_form| %>
+        <%= render "order_detail_fields", f: details_form %>
+      <% end %>
+      <%= link_to_add_fields "Add Product", form, :order_details %>
+    </fieldset>
+    <%#= form.fields_for :order_details do |f| %>
+      <%# render 'detail_fields', f: f %>
+    <%#= end %>
+  </div>
+
   <div class="actions">
     <%= form.submit %>
   </div>

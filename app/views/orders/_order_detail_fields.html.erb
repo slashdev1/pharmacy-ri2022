@@ -1,0 +1,23 @@
+<%#= f.label :product_id %>
+<%#= f.select :product_id, options_for_select(Product.all.map {|key| [key.name, key.id]}, :product_id) %>
+
+<%#= link_to_add_fields 'Add Product', f, :order_details %>
+<div class="nested-fields">
+  <%= f.hidden_field :_destroy %>
+  <div>
+    <%= f.label :product_id %>
+    <%= f.select :product_id, options_for_select(Product.all.map {|key| [key.name, key.id]}, :product_id) %>
+  </div>
+  <div>
+    <%= f.label :qty %>
+    <%= f.text_field :qty %>
+  </div>
+  <div>
+    <%= f.label :price %>
+    <%= f.text_field :price %>
+  </div>
+  <div>
+    <%= link_to "Remove", '#', class: "remove_fields" %>
+  </div>
+</div>
+<% # Problem: if order exist this code make dupes of details %>
