@@ -7,9 +7,10 @@ import Rails from "@rails/ujs"
 import Turbolinks from "turbolinks"
 import * as ActiveStorage from "@rails/activestorage"
 import "channels"
-//import '../stylesheets/application.scss'
 require("../stylesheets/application.scss")
 import "chartkick/chart.js"
+require('./nested-forms/addFields')
+require('./nested-forms/removeFields')
 
 Rails.start()
 Turbolinks.start()

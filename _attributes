@@ -1,0 +1,19 @@
+
+[1mFrom:[0m /home/slashdev1/projects/pharmacy-ri2022/app/controllers/orders_controller.rb:33 OrdersController#create:
+
+    [1;34m26[0m: [32mdef[0m [1;34mcreate[0m
+    [1;34m27[0m:   @order = [1;34;4mOrder[0m.new(order_params)
+    [1;34m28[0m:   @order.user = [1;34;4mUser[0m.all.sample [1;34m#current_user #[0m
+    [1;34m29[0m:   [1;34m#@order.order_status = OrderStatus.find_by(name: 'Подготовлен')[0m
+    [1;34m30[0m:   @order.order_status_id = [1;34m1[0m
+    [1;34m31[0m:   @order.amount = [1;34m1[0m
+    [1;34m32[0m:   binding.pry
+ => [1;34m33[0m:   order_params.order_details_attributes.each {|k,v| }
+    [1;34m34[0m: 
+    [1;34m35[0m:   [32mif[0m @order.save
+    [1;34m36[0m:     redirect_to @order, [35mnotice[0m: [31m[1;31m'[0m[31mOrder was successfully created.[1;31m'[0m[31m[0m
+    [1;34m37[0m:   [32melse[0m
+    [1;34m38[0m:     render [33m:new[0m
+    [1;34m39[0m:   [32mend[0m
+    [1;34m40[0m: [32mend[0m
+

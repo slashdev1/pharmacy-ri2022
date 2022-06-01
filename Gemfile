@@ -55,6 +55,8 @@ group :development do
   gem 'rubocop-rspec' # or gem 'rubocop-minitest
 
   gem 'shoulda-matchers'
+
+  gem 'pry-byebug'
 end
 
 group :test do
