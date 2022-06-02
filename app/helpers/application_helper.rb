@@ -44,6 +44,12 @@ module ApplicationHelper
     end
   end
 
+  def available_qty_fmt(qty)
+    return 'Багато' if qty >= 10
+    return 'Закінчується' if qty > 0
+    return 'Не має'
+  end
+
   # This method creates a link with `data-id` `data-fields` attributes. These attributes are used to create new instances of the nested fields through Javascript.
   def link_to_add_fields(name, f, association)
 

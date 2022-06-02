@@ -15,7 +15,7 @@
 
   <div class="field">
     <%= form.label 'Роль', {:class => 'lbl'} %>
-    <%= form.select :role, options_for_select(User.get_roles_array, user.role), {}, {:disabled => !current_user.is_admin?} %>
+    <%= form.select :role, options_for_select(User.get_roles_array.map{|k, v| [role_fmt(v), v]}, user.role), {}, {:disabled => !current_user.is_admin?} %>
   </div>
 
   <div class="actions">

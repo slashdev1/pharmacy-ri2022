@@ -11,6 +11,7 @@
   <thead>
     <tr>
       <th>Номер</th>
+      <th>Дата</th>
       <th>Статус</th>
       <th>Сума</th>
       <th>Автор</th>
@@ -22,6 +23,7 @@
     <% @orders.each do |order| %>
       <tr>
         <td><%= order.id %></td>
+        <td><%= date_fmt(order.created_at) %></td>
         <% # Problem: can't use this statement: order.order_status.name %>
         <td><%= OrderStatus.find(order.order_status_id).name %></td>
         <td><%= price_fmt(order.amount) %></td>
@@ -36,7 +38,7 @@
 
 <% if current_user.is_pharmacist? %>
   <h2>Закриті</h2>
-  <% not_prepared_orders = Order.not_prepared %>
+  <% not_prepared_orders = Order.not_prepared.ordered_by_date %>
   <% if not_prepared_orders.count == 0 %>
     <p>Немає жодного</p>
   <% else %>
@@ -44,6 +46,7 @@
     <thead>
     <tr>
       <th>Номер</th>
+      <th>Дата</th>
       <th>Статус</th>
       <th>Сума</th>
       <th>Автор</th>
@@ -55,6 +58,7 @@
     <% not_prepared_orders.each do |order| %>
       <tr>
         <td><%= order.id %></td>
+        <td><%= date_fmt(order.created_at) %></td>
         <% # Problem: can't use this statement: order.order_status.name %>
         <td><%= OrderStatus.find(order.order_status_id).name %></td>
         <td><%= price_fmt(order.amount) %></td>

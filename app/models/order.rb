@@ -10,6 +10,7 @@ class Order < ApplicationRecord
 
   scope :prepared, -> { where(order_status_id: OrderStatus.get_prepared_status_id) }
   scope :not_prepared, -> { where.not(order_status_id: OrderStatus.get_prepared_status_id) }
+  scope :ordered_by_date, -> { order(created_at: :asc) }
 
   def is_prepered?
     order_status_id == OrderStatus.get_prepared_status_id

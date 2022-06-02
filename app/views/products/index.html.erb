@@ -14,13 +14,14 @@
   </thead>
 
   <tbody>
+    <% user_is_pharmacist = user_signed_in? && current_user.is_pharmacist? %>
     <% @products.each do |product| %>
       <tr onclick="document.location = '<%= product_path(product) %>'" class="pointer">
         <td><%= product.name %></td>
         <td><%= price_fmt(product.price) %></td>
         <td><%= check_mark_fmt(product.required_prescription) %></td>
         <td><%= for_whom_fmt(product.for_adult_children) %></td>
-        <td><%= product.available_qty %></td>
+        <td><%= user_is_pharmacist ? product.available_qty : available_qty_fmt(product.available_qty) %></td>
       </tr>
     <% end %>
   </tbody>

@@ -29,5 +29,7 @@
 
 <br>
 <hr>
-<% data = User.group(:role).count; prepared_data = User.get_roles_array.collect{|v| [v[0], data[v[1]]]} %>
+<% data = User.group(:role).count
+   prepared_data = User.get_roles_array.collect{|v| [role_fmt(v[1]), data[v[1]]]}
+%>
 <%= pie_chart prepared_data, donut: true %>

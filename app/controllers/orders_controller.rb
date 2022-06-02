@@ -5,7 +5,7 @@ class OrdersController < ApplicationController
   before_action :authorize_order!, except: [:new]
 
   def index
-    @orders = policy_scope(Order)
+    @orders = policy_scope(Order).ordered_by_date
   end
 
   def show
