@@ -1,16 +1,20 @@
-<%= provide :page_title, 'Закази' %>
-<p id="notice"><%= notice %></p>
+<%= provide :page_title, 'Замовлення' %>
 
-<h1>Закази</h1>
-
+<h1>Замовлення</h1>
+<% if current_user.is_pharmacist? %>
+  <h2>Підготовлені</h2>
+<% end %>
+<% if @orders.count == 0 %>
+  <p>Немає жодного</p>
+<% else %>
 <table>
   <thead>
     <tr>
       <th>Номер</th>
-      <th>Автор</th>
       <th>Статус</th>
       <th>Сума</th>
-      <th colspan="3"></th>
+      <th>Автор</th>
+      <th colspan="2"></th>
     </tr>
   </thead>
 
@@ -18,18 +22,53 @@
     <% @orders.each do |order| %>
       <tr>
         <td><%= order.id %></td>
-        <td><%= order.user.name %></td>
-        <td><%= order.order_status_id %></td>
         <% # Problem: can't use this statement: order.order_status.name %>
-        <td><%= order.amount %></td>
-        <td><%= link_to 'Show', order %></td>
-        <td><%= link_to 'Edit', edit_order_path(order) %></td>
-        <td><%= link_to 'Destroy', order, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= OrderStatus.find(order.order_status_id).name %></td>
+        <td><%= price_fmt(order.amount) %></td>
+        <td><%= order.user.name %></td>
+        <td><%= link_to 'Показати', order %></td>
+        <td><%= link_to 'Редагувати', edit_order_path(order) %></td>
       </tr>
     <% end %>
   </tbody>
 </table>
+<% end %>
+
+<% if current_user.is_pharmacist? %>
+  <h2>Закриті</h2>
+  <% not_prepared_orders = Order.not_prepared %>
+  <% if not_prepared_orders.count == 0 %>
+    <p>Немає жодного</p>
+  <% else %>
+  <table>
+    <thead>
+    <tr>
+      <th>Номер</th>
+      <th>Статус</th>
+      <th>Сума</th>
+      <th>Автор</th>
+      <th colspan="2"></th>
+    </tr>
+    </thead>
+
+    <tbody>
+    <% not_prepared_orders.each do |order| %>
+      <tr>
+        <td><%= order.id %></td>
+        <% # Problem: can't use this statement: order.order_status.name %>
+        <td><%= OrderStatus.find(order.order_status_id).name %></td>
+        <td><%= price_fmt(order.amount) %></td>
+        <td><%= order.user.name %></td>
+        <td><%= link_to 'Показати', order %></td>
+        <td></td>
+      </tr>
+    <% end %>
+    </tbody>
+  </table>
+  <% end %>
+<% end %>
 
 <br>
 
-<%= link_to 'New Order', new_order_path %>
+<%= link_to 'Створити замовлення', new_order_path %> |
+<%= link_to 'Назад', :back %>

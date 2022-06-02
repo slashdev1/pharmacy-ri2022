@@ -11,6 +11,7 @@ require("../stylesheets/application.scss")
 import "chartkick/chart.js"
 require('./nested-forms/addFields')
 require('./nested-forms/removeFields')
+require('./scripts/select')
 
 Rails.start()
 Turbolinks.start()

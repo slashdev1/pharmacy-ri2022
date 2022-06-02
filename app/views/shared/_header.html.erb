@@ -1,5 +1,5 @@
 <header>
-  <nav class="navbar navbar-light bg-light">
+  <nav class="navbar navbar-light bg-light navbar-expand-sm">
     <div class="container-fluid">
       <a class="navbar-brand" href="/">
         <img
@@ -11,12 +11,49 @@
           />
         <small>PharmacyRi2022</small>
       </a>
-      <% if user_signed_in? %>
-        <span>Здравствуйте, <%= current_user.email %></span>
-        <%= link_to 'Выйти', destroy_user_session_path, :method => :delete %>
-      <% else %>
-        <%= link_to 'Войти', new_user_session_path %> или <%= link_to 'Зарегистрироваться', new_user_registration_path %>
-      <% end %>
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+          <%= link_to "Ліки", products_url, {:class => 'nav-link'} %>
+        </li>
+        <% if user_signed_in? %>
+          <li class="nav-item">
+            <%= link_to "Замовлення", orders_path, {:class => 'nav-link'} %>
+          </li>
+        <% end %>
+        <% if user_signed_in? && current_user.is_doctor? %>
+          <li class="nav-item">
+            <%= link_to "Рецепти", prescriptions_path, {:class => 'nav-link'} %>
+          </li>
+        <% end %>
+        <% if user_signed_in? && current_user.is_pharmacist? %>
+          <li class="nav-item">
+            <%= link_to "Надходження", arrivals_path, {:class => 'nav-link'} %>
+          </li>
+        <% end %>
+        <% if user_signed_in? && current_user.is_admin? %>
+          <li class="nav-item">
+            <%= link_to "Користувачі", users_path, {:class => 'nav-link'} %>
+          </li>
+        <% end %>
+        <li class="nav-item">
+          <%= link_to "Про цей застосунок", about_index_path, {:class => 'nav-link'} %>
+        </li>
+        <% if user_signed_in? %>
+          <li class="nav-item">
+            <%= link_to "Профайл (#{current_user.name})", current_user, {:class => 'nav-link'} %>
+          </li>
+          <li class="nav-item">
+            <%= link_to 'Вийти', destroy_user_session_path, method: :delete, data: { confirm: 'Ви певні?' }, class: 'nav-link' %>
+          </li>
+        <% else %>
+          <li class="nav-item">
+            <%= link_to 'Зареєструватись', new_user_registration_path, {:class => 'nav-link'} %>
+          </li>
+          <li class="nav-item">
+            <%= link_to 'Увійти', new_user_session_path, {:class => 'nav-link'} %>
+          </li>
+        <% end %>
+      </ul>
     </div>
   </nav>
 </header>

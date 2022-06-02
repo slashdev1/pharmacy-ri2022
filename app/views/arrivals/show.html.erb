@@ -1,4 +1,31 @@
-<p id="notice"><%= notice %></p>
+<%= provide :page_title, "Надходження №#{@arrival.id}" %>
 
-<%= link_to 'Edit', edit_arrival_path(@arrival) %> |
-<%= link_to 'Back', arrivals_path %>
+<p>
+  <strong>Номер:</strong>
+  <%= @arrival.id %>
+</p>
+
+<p>
+  <strong>Дата:</strong>
+  <%= date_fmt(@arrival.created_at) %>
+</p>
+
+<p>
+  <strong>Ліки:</strong>
+  <%= @arrival.product_name %>
+</p>
+
+<p>
+  <strong>Кількість:</strong>
+  <%= @arrival.qty %>
+</p>
+
+<p>
+  <strong>Ціна:</strong>
+  <%= price_fmt(@arrival.price) %>
+</p>
+
+<% if policy(@arrival).edit? %>
+  <%= link_to 'Редагувати', edit_arrival_path(@arrival) %> |
+<% end %>
+<%= link_to 'Назад', arrivals_path %>

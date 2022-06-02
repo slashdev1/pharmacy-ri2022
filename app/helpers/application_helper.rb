@@ -4,6 +4,46 @@ module ApplicationHelper
     (page_title.present? ? "#{page_title} | " : '') + base_title
   end
 
+  def date_fmt(date, short = false)
+    date.strftime('%d.%m.%Y' + (short ? '' : ' %T'))
+  end
+
+  def bool_fmt(bool)
+    bool == true ? 'Так' : 'Ні'
+  end
+
+  def check_mark_fmt(bool)
+    bool == true ? '✔' : '-'
+  end
+
+  def price_fmt(price)
+    '%.2f' % price + ' грн'
+  end
+
+  def for_whom_fmt(whom)
+    case whom
+      when 'for_adult'
+        'Для дорослих'
+      when 'for_children'
+        'Для дітей'
+      else
+        'Не визначено'
+    end
+  end
+
+  def role_fmt(role)
+    case role
+      when 0
+        'Користувач'
+      when 1
+        'Фармацевт'
+      when 2
+        'Лікар'
+      else
+        "Не визначено"
+    end
+  end
+
   # This method creates a link with `data-id` `data-fields` attributes. These attributes are used to create new instances of the nested fields through Javascript.
   def link_to_add_fields(name, f, association)
 

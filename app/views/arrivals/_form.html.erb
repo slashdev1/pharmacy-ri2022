@@ -1,17 +1,24 @@
 <%= form_with(model: arrival) do |form| %>
   <% if arrival.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(arrival.errors.count, "error") %> prohibited this arrival from being saved:</h2>
-
-      <ul>
-        <% arrival.errors.each do |error| %>
-          <li><%= error.full_message %></li>
-        <% end %>
-      </ul>
-    </div>
+    <%= render partial: 'shared/record_errors', locals: {errors: arrival.errors} %>
   <% end %>
 
+  <div class="field">
+    <%= form.label "Ліки", {:class => "lbl"} %>
+    <%= form.select :product_id, options_for_select(Product.all.map {|key| [key.name, key.id]}, form.object.product_id) %>
+  </div>
+
+  <div class="field">
+    <%= form.label "Кількість", {:class => 'lbl'} %>
+    <%= form.number_field :qty, value: form.object.qty.to_i || 1, step: 1 %>
+  </div>
+
+  <div class="field">
+    <%= form.label "Ціна", {:class => 'lbl'} %>
+    <%= form.number_field :price, value: number_to_currency(form.object.price.to_f, delimiter: '', unit: ''), step: :any %>
+  </div>
+
   <div class="actions">
-    <%= form.submit %>
+    <%= form.submit "Зберегти" %>
   </div>
 <% end %>

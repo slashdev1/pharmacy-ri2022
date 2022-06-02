@@ -1,37 +1,39 @@
 <%= form_with(model: product) do |form| %>
   <% if product.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(product.errors.count, "error") %> prohibited this product from being saved:</h2>
-
-      <ul>
-        <% product.errors.each do |error| %>
-          <li><%= error.full_message %></li>
-        <% end %>
-      </ul>
-    </div>
+    <%= render partial: 'shared/record_errors', locals: {errors: product.errors} %>
   <% end %>
 
   <div class="field">
-    <%= form.label :name %>
+    <%= form.label "Назва", {:class => 'lbl'} %>
     <%= form.text_field :name %>
   </div>
 
   <div class="field">
-    <%= form.label :required_prescription %>
+    <%= form.label "Опис", {:class => 'lbl va-top'} %>
+    <%= form.text_area(:description, size: '60x6') %>
+  </div>
+
+  <div class="field">
+    <%= form.label "Посиляння на фото", {:class => 'lbl'} %>
+    <%= form.text_field :img_url %>
+  </div>
+
+  <div class="field">
+    <%= form.label "Потребує рецепту", {:class => 'lbl'} %>
     <%= form.check_box :required_prescription %>
   </div>
 
   <div class="field">
-    <%= form.label :price %>
+    <%= form.label "Ціна", {:class => 'lbl'} %>
     <%= form.number_field :price, value: number_to_currency(form.object.price.to_f, delimiter: '', unit: ''), step: :any %>
   </div>
 
   <div class="field">
-    <%= form.label :for_adult_children %>
+    <%= form.label "Для дорослих/дітей", {:class => 'lbl'} %>
     <%= form.select :for_adult_children, options_for_select(Product.get_for_adult_children_array, product.for_adult_children) %>
   </div>
 
   <div class="actions">
-    <%= form.submit %>
+    <%= form.submit "Зберегти" %>
   </div>
 <% end %>

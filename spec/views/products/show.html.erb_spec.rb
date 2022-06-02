@@ -20,6 +20,6 @@ RSpec.describe "products/show", type: :view do
 
     render
 
-    expect(rendered).to match 'Back'
+    expect(rendered).to match 'Назад'
   end
 end

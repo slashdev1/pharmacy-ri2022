@@ -1,34 +1,45 @@
 <%= provide :page_title, "Замовлення №#{@order.id}" %>
-<p id="notice"><%= notice %></p>
 
 <p>
   <strong>Номер:</strong>
   <%= @order.id %>
 </p>
-
 <p>
-  <strong>Клієнт:</strong>
-  <%= @order.user.name %>
-</p>
-
-<p>
-  <strong>Сума, грн:</strong>
-  <%= @order.amount %>
+  <strong>Дата:</strong>
+  <%= date_fmt(@order.created_at) %>
 </p>
 
 <p>
   <strong>Статус:</strong>
-  <%= @order.order_status_id %>
+  <% # Problem: can't use this statement: @order.order_status %>
+  <% # PG::UndefinedColumn: ERROR:  column order_statuses.order_id does not exist %>
+  <%= OrderStatus.find(@order.order_status_id).name %>
 </p>
 
 <p>
-  <strong>Ліки:</strong>
+  <strong>Автор:</strong>
+  <%= @order.user.name %>
+</p>
+
+<p>
+  <strong>Сума:</strong>
+  <%= price_fmt(@order.amount) %>
+</p>
+
+<p>
+  <strong>Коментар:</strong>
+  <%= @order.comment %>
+</p>
+<hr>
+<p>
+  <strong>Список лік:</strong>
 
   <table>
     <thead>
     <tr>
       <th>Для дорослих/дітей</th>
       <th>Назва</th>
+      <th>Номер рецепту</th>
       <th>Кількість</th>
       <th>Ціна</th>
       <th>Сума</th>
@@ -38,18 +49,23 @@
     <tbody>
     <% @order.order_details.each do |detail| %>
       <tr>
-        <td><%= detail.product_id %></td>
         <% # Problem: can't use this statement: detail.product.for_adult_children %>
-        <td><%= detail.product_id %></td>
         <% # Problem: can't use this statement: detail.product.name %>
+        <% # PG::UndefinedColumn: ERROR:  column products.order_detail_id does not exist %>
+        <% product = Product.find(detail.product_id) %>
+        <td><%= for_whom_fmt(product.for_adult_children) %></td>
+        <td><%= product.name %></td>
+        <td><%= detail.prescription_number %></td>
         <td><%= detail.qty %></td>
-        <td><%= detail.price %></td>
-        <td><%= detail.qty * detail.price %></td>
+        <td><%= price_fmt(detail.price) %></td>
+        <td><%= price_fmt(detail.qty * detail.price) %></td>
       </tr>
     <% end %>
     </tbody>
   </table>
 </p>
 
-<%= link_to 'Edit', edit_order_path(@order) %> |
-<%= link_to 'Back', orders_path %>
+<% if policy(@order).edit? %>
+  <%= link_to 'Редагувати', edit_order_path(@order) %> |
+<% end %>
+<%= link_to 'Назад', orders_path %>

@@ -1,8 +1,53 @@
 body {
     margin: auto !important;
     width: 90% !important;
+    padding-bottom: 60px;
 }
 
 table {
     width: 100% !important;
+}
+
+.ml-auto {
+    margin-left: auto !important
+}
+
+.footer {
+    margin: auto !important;
+    width: 90% !important;
+}
+
+.field {
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+.actions {
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.lbl {
+    width: 150px;
+}
+.va-top {
+    vertical-align: top;
+}
+.pointer {
+    cursor: pointer;
+}
+
+.field_with_errors {
+    padding: 2px;
+    background-color: red;
+    display: inline-block; }
+
+label {
+    display: block; }
+
+
+.alert-item {
+    margin-bottom: 0px;
+    margin-left: 10px;
+    font-size: smaller;
 }

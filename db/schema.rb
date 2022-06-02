@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_05_13_111208) do
+ActiveRecord::Schema.define(version: 2022_06_02_120713) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -31,6 +31,7 @@ ActiveRecord::Schema.define(version: 2022_05_13_111208) do
     t.integer "qty", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "prescription_number", default: "", null: false
     t.index ["order_id"], name: "index_order_details_on_order_id"
     t.index ["product_id"], name: "index_order_details_on_product_id"
   end
@@ -47,6 +48,7 @@ ActiveRecord::Schema.define(version: 2022_05_13_111208) do
     t.decimal "amount", precision: 15, scale: 2, null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.text "comment", default: "", null: false
     t.index ["order_status_id"], name: "index_orders_on_order_status_id"
     t.index ["user_id"], name: "index_orders_on_user_id"
   end
@@ -59,6 +61,7 @@ ActiveRecord::Schema.define(version: 2022_05_13_111208) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.bigint "product_id", null: false
+    t.date "expiry_date", default: -> { "CURRENT_TIMESTAMP" }, null: false
     t.index ["doctor_id"], name: "index_prescriptions_on_doctor_id"
     t.index ["number"], name: "index_prescriptions_on_number", unique: true
     t.index ["product_id"], name: "index_prescriptions_on_product_id"
@@ -71,6 +74,8 @@ ActiveRecord::Schema.define(version: 2022_05_13_111208) do
     t.integer "for_adult_children", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.text "description", default: "", null: false
+    t.string "img_url", default: "", null: false
   end
 
   create_table "roles", force: :cascade do |t|
@@ -92,12 +97,13 @@ ActiveRecord::Schema.define(version: 2022_05_13_111208) do
     t.string "name", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.integer "role", null: false, default: 0
+    t.integer "role", default: 0, null: false
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
     t.string "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
+    t.boolean "admin", default: false, null: false
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 

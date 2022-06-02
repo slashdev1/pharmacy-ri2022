@@ -1,32 +1,24 @@
 <%= form_with(model: user) do |form| %>
   <% if user.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(user.errors.count, "error") %> prohibited this user from being saved:</h2>
-
-      <ul>
-        <% user.errors.each do |error| %>
-          <li><%= error.full_message %></li>
-        <% end %>
-      </ul>
-    </div>
+    <%= render partial: 'shared/record_errors', locals: {errors: user.errors} %>
   <% end %>
 
   <div class="field">
-    <%= form.label :name %>
+    <%= form.label 'Ім\'я', {:class => 'lbl'} %>
     <%= form.text_field :name %>
   </div>
 
   <div class="field">
-    <%= form.label :email %>
-    <%= form.text_field :email %>
+    <%= form.label :email, {:class => 'lbl'} %>
+    <%= form.text_field :email, disabled: !user.new_record? %>
   </div>
 
   <div class="field">
-    <%= form.label :role %>
-    <%= form.select :role, options_for_select(User.get_roles_array, user.role) %>
+    <%= form.label 'Роль', {:class => 'lbl'} %>
+    <%= form.select :role, options_for_select(User.get_roles_array, user.role), {}, {:disabled => !current_user.is_admin?} %>
   </div>
 
   <div class="actions">
-    <%= form.submit %>
+    <%= form.submit "Зберегти" %>
   </div>
 <% end %>

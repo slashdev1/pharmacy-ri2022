@@ -1,5 +1,4 @@
 <%= provide :page_title, 'Рецепти' %>
-<p id="notice"><%= notice %></p>
 
 <h1>Рецепти</h1>
 
@@ -7,10 +6,12 @@
   <thead>
     <tr>
       <th>Номер</th>
+      <th>Термін придатності</th>
       <th>Використаний</th>
       <th>Лікар</th>
+      <th>Ліки</th>
       <th>Для дорослих/дітей</th>
-      <th colspan="3"></th>
+      <th colspan="2"></th>
     </tr>
   </thead>
 
@@ -18,12 +19,13 @@
     <% @prescriptions.each do |prescription| %>
       <tr>
         <td><%= prescription.number %></td>
-        <td><%= prescription.is_used %></td>
-        <td><%= prescription.doctor_id %></td>
-        <td><%= prescription.for_adult_children %></td>
-        <td><%= link_to 'Show', prescription %></td>
-        <td><%= link_to 'Edit', edit_prescription_path(prescription) %></td>
-        <td><%= link_to 'Destroy', prescription, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= date_fmt(prescription.expiry_date, true) %></td>
+        <td><%= check_mark_fmt(prescription.is_used) %></td>
+        <td><%= prescription.doctor_name %></td>
+        <td><%= prescription.product_name %></td>
+        <td><%= for_whom_fmt(prescription.for_adult_children) %></td>
+        <td><%= link_to 'Показати', prescription %></td>
+        <td><%= link_to 'Редагувати', edit_prescription_path(prescription) %></td>
       </tr>
     <% end %>
   </tbody>
@@ -31,4 +33,5 @@
 
 <br>
 
-<%= link_to 'New Prescription', new_prescription_path %>
+<%= link_to 'Створити рецепт', new_prescription_path %> |
+<%= link_to "Назад", :back %>

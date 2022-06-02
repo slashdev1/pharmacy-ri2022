@@ -1,7 +1,33 @@
-<h1>Аптека</h1>
-<ul>
-  <li><%= link_to 'Ліки', products_path %></li>
-  <li><%= link_to 'Замовлення', orders_path %></li>
-  <li><%= link_to 'Рецепти', prescriptions_path %></li>
-  <li><%= link_to 'Користувачі', users_path %></li>
-</ul>
+<h1>Ліки у наявності</h1>
+
+<div class="container justify-content-center mt-50 mb-50">
+  <div class="row">
+  <% product_count = 0 %>
+  <% Product.on_stock.ordered_by_name.each do |product| %>
+    <% product_count += 1;  %>
+    <% if product_count % 5 == 0 %>
+    </div>
+    <div class="row">
+    <% end %>
+      <div class="col-md-3 mt-2">
+        <div class="card">
+          <div class="card-body">
+            <div class="card-img-actions">
+              <img src="<%= product.img_url.empty? ? asset_path('no-photo.png') : product.img_url %>" class="card-img img-fluid" width="96" height="350" alt="">
+            </div>
+          </div>
+          <div class="card-body bg-light text-center">
+            <div class="mb-2">
+              <h6 class="font-weight-semibold mb-2">
+                <a href="<%= product_path(product) %>" class="text-default mb-2" data-abc="true"><%= product.name %></a>
+              </h6>
+              <a href="<%= product_path(product) %>" class="text-muted" data-abc="true"><%= product.description.truncate(60) %></a>
+            </div>
+
+            <h3 class="mb-0 font-weight-semibold"><%= price_fmt(product.price) %></h3>
+
+          </div>
+        </div>
+      </div>
+  <% end %>
+</div>

@@ -12,7 +12,7 @@ class User < ApplicationRecord
 
   validates :name, presence: true, uniqueness: true, length: { minimum: 2, maximum: 100 }
   validates :email, presence: true, uniqueness: true
-  validates :role, inclusion: { in: User.roles.map {|k,v| v} }#{ in: 0..2 }
+  validates :role, inclusion: { in: User.roles.map {|k,v| v} }
 
   def is_doctor?
     role == User.roles[:doctor]
@@ -20,6 +20,14 @@ class User < ApplicationRecord
 
   def is_pharmacist?
     role == User.roles[:pharmacist]
+  end
+
+  def is_admin?
+    admin == true
+  end
+
+  def author?(record)
+    self == record.user
   end
 
   def self.get_roles_array

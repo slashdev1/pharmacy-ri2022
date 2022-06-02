@@ -3,9 +3,9 @@
   <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
 </head>
 <body>
-  <h1>Welcome to <%= @site_url %>, <%= @user.name %></h1>
+  <h1>Вітаємо у <%= @site_url %>, шановний(-а) <%= @user.name %></h1>
   <p>
-    To login to the site, just follow this link: <%= @login_url %>.
+    Для атворизації перейдіть за цим посиланням: <%= @login_url %>.
   </p>
 </body>
 </html>

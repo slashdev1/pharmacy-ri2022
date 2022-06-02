@@ -1,0 +1,8 @@
+<div class="alert alert-danger">
+  <%= "#{errors.count} помилки(-а)" %> заважають збереженню:
+  <ul>
+    <% errors.each do |error| %>
+      <li class="alert-item"><%= error.message %></li>
+    <% end %>
+  </ul>
+</div>
