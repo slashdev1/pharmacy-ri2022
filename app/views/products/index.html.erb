@@ -1,5 +1,4 @@
 <%= provide :page_title, 'Ліки' %>
-<p id="notice"><%= notice %></p>
 
 <h1>Ліки</h1>
 
@@ -8,22 +7,21 @@
     <tr>
       <th>Назва</th>
       <th>Ціна</th>
-      <th>Потребує рецепту</th>
+      <th>Потребує рецепт</th>
       <th>Для дорослих/дітей</th>
-      <th colspan="3"></th>
+      <th>Залишок</th>
     </tr>
   </thead>
 
   <tbody>
+    <% user_is_pharmacist = user_signed_in? && current_user.is_pharmacist? %>
     <% @products.each do |product| %>
-      <tr>
+      <tr onclick="document.location = '<%= product_path(product) %>'" class="pointer">
         <td><%= product.name %></td>
-        <td><%= product.price %></td>
-        <td><%= product.required_prescription %></td>
-        <td><%= product.for_adult_children %></td>
-        <td><%= link_to 'Show', product %></td>
-        <td><%= link_to 'Edit', edit_product_path(product) %></td>
-        <td><%= link_to 'Destroy', product, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= price_fmt(product.price) %></td>
+        <td><%= check_mark_fmt(product.required_prescription) %></td>
+        <td><%= for_whom_fmt(product.for_adult_children) %></td>
+        <td><%= user_is_pharmacist ? product.available_qty : available_qty_fmt(product.available_qty) %></td>
       </tr>
     <% end %>
   </tbody>
@@ -31,4 +29,22 @@
 
 <br>
 
-<%= link_to 'New Product', new_product_path %>
+<% if policy(Product).create? %>
+  <%= link_to 'Створити ліки', new_product_path %> |
+<% end %>
+<%= link_to 'Назад', :back %>
+
+<% if user_signed_in? && current_user.is_pharmacist?  %>
+  <hr>
+  <h3>Графік кількості замовлень ліків по датам:</h3>
+  <% prepared_data = Order.group_by_day(:created_at).count %>
+  <%= line_chart prepared_data, donut: true %>
+
+  <br>
+
+  <h3>Графік продажу ліків по назвам, в грн:</h3>
+  <% prepared_data = OrderDetail.joins('inner join products as p on order_details.product_id = p.id')
+                                .select('p.name as name, order_details.qty * order_details.price as amount')
+                                .group('name').sum('order_details.qty * order_details.price') %>
+  <%= bar_chart prepared_data %>
+<% end%>

@@ -1,42 +1,25 @@
 <%= form_with(model: prescription) do |form| %>
   <% if prescription.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(prescription.errors.count, "error") %> prohibited this prescription from being saved:</h2>
-
-      <ul>
-        <% prescription.errors.each do |error| %>
-          <li><%= error.full_message %></li>
-        <% end %>
-      </ul>
-    </div>
+    <%= render partial: 'shared/record_errors', locals: {errors: prescription.errors} %>
   <% end %>
 
   <div class="field">
-    <%= form.label :number %>
+    <%= form.label "Номер", {:class => "lbl"} %>
     <%= form.text_field :number %>
   </div>
 
   <div class="field">
-    <%= form.label :is_used %>
-    <%= form.check_box :is_used %>
+    <%= form.label "Ліки", {:class => "lbl"} %>
+    <% list_prescriptions = Product.require_prescription.ordered_by_name.map {|key| [key.name, key.id]} %>
+    <%= form.select :product_id, options_for_select(list_prescriptions, form.object.product_id) %>
   </div>
 
   <div class="field">
-    <%= form.label :doctor_id %>
-    <%= form.select :doctor_id, options_for_select(User.is_doctor.map {|key| [key.name, key.id]}, :doctor_id) %>
-  </div>
-
-  <div class="field">
-    <%= form.label :product_id %>
-    <%= form.select :product_id, options_for_select(Product.all.map {|key| [key.name, key.id]}, :product_id) %>
-  </div>
-
-  <div class="field">
-    <%= form.label :for_adult_children %>
-    <%= form.select :for_adult_children, options_for_select(Prescription.for_adult_children.map {|key, value| [key.titleize, Prescription.for_adult_children.key(value)]}, :for_adult_children) %>
+    <%= form.label "Термін придатності", {:class => "lbl"} %>
+    <%= form.text_field :expiry_date, type: :date %>
   </div>
 
   <div class="actions">
-    <%= form.submit %>
+    <%= form.submit "Зберегти" %>
   </div>
 <% end %>

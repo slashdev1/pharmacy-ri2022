@@ -1,25 +1,35 @@
-<%= provide :page_title, @prescription.number %>
-<p id="notice"><%= notice %></p>
+<%= provide :page_title, "Рецепт №#{@prescription.number}" %>
 
 <p>
   <strong>Номер:</strong>
   <%= @prescription.number %>
 </p>
+<p>
+  <strong>Термін придатності:</strong>
+  <%= date_fmt(@prescription.expiry_date, true) %>
+</p>
 
 <p>
   <strong>Використаний:</strong>
-  <%= @prescription.is_used %>
+  <%= bool_fmt(@prescription.is_used) %>
 </p>
 
 <p>
   <strong>Лікар:</strong>
-  <%= @prescription.doctor_id %>
+  <%= @prescription.doctor_name %>
+</p>
+
+<p>
+  <strong>Ліки:</strong>
+  <%= @prescription.product_name %>
 </p>
 
 <p>
   <strong>Для дорослих/дітей:</strong>
-  <%= @prescription.for_adult_children %>
+  <%= for_whom_fmt(@prescription.for_adult_children) %>
 </p>
 
-<%= link_to 'Edit', edit_prescription_path(@prescription) %> |
-<%= link_to 'Back', prescriptions_path %>
+<% if policy(@prescription).edit? %>
+  <%= link_to 'Редагувати', edit_prescription_path(@prescription) %> |
+<% end %>
+<%= link_to 'Назад', prescriptions_path %>

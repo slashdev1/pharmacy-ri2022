@@ -61,7 +61,8 @@ Rails.application.configure do
   config.assets.debug = true
 
   # Suppress logger output for asset requests.
-  config.assets.quiet = true
+  #config.assets.quiet = true
+  config.assets.quiet = false
 
   # Raises error for missing translations.
   # config.i18n.raise_on_missing_translations = true
@@ -79,4 +80,5 @@ Rails.application.configure do
   # Set default logger
   Rails.logger = Logger.new(STDOUT)
   config.logger = ActiveSupport::Logger.new("log/#{Rails.env}.log")
+  #config.logger = ActiveSupport::Logger.new('/dev/null')
 end

@@ -1,7 +1,7 @@
-<%= provide :page_title, @prescription.number %>
-<h1>Коригування рецепту</h1>
+<%= provide :page_title, "Рецепт №#{@prescription.number}" %>
+<h1>Редагування рецепту</h1>
 
 <%= render 'form', prescription: @prescription %>
 
-<%= link_to 'Show', @prescription %> |
-<%= link_to 'Back', prescriptions_path %>
+<%= link_to 'Показати', @prescription %> |
+<%= link_to 'Назад', prescriptions_path %>

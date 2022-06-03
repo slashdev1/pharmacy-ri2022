@@ -1,6 +1,6 @@
-<p id="notice"><%= notice %></p>
+<%= provide :page_title, 'Користувачі' %>
 
-<h1>Users</h1>
+<h1>Користувачі</h1>
 
 <table>
   <thead>
@@ -9,7 +9,7 @@
       <th>Роль</th>
       <th>Email</th>
       <th>Дата реєстрації</th>
-      <th colspan="3"></th>
+      <th colspan="2"></th>
     </tr>
   </thead>
 
@@ -17,19 +17,19 @@
     <% @users.each do |user| %>
       <tr>
         <td><%= user.name %></td>
-        <td><%= user.role %></td>
+        <td><%= role_fmt(user.role) %></td>
         <td><%= user.email %></td>
-        <td><%= user.created_at %></td>
-        <td><%= link_to 'Show', user %></td>
-        <td><%= link_to 'Edit', edit_user_path(user) %></td>
-        <td><%= link_to 'Destroy', user, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= date_fmt(user.created_at) %></td>
+        <td><%= link_to 'Показати', user %></td>
+        <td><%= link_to 'Редагувати', edit_user_path(user) %></td>
       </tr>
     <% end %>
   </tbody>
 </table>
 
 <br>
-
-<%= link_to 'New User', new_user_path %>
-
-<%= pie_chart User.group(:role).count %>
+<hr>
+<% data = User.group(:role).count
+   prepared_data = User.get_roles_array.collect{|v| [role_fmt(v[1]), data[v[1]]]}
+%>
+<%= pie_chart prepared_data, donut: true %>

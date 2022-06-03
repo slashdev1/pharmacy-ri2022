@@ -3,9 +3,9 @@
   <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
 </head>
 <body>
-  <h1>Hello, <%= @user.name %></h1>
+  <h1>Шановний(-а), <%= @user.name %></h1>
   <p>
-    Your order has been successfuly placed. To track status of it, just follow this link: <%= @order_url %>.
+    Ваше замовлення №<%= @order.id %> успішно створене. Для перевірки його статусу просто перейдіть по цьому посиланню: <%= @order_url %>.
   </p>
 </body>
 </html>

@@ -20,11 +20,6 @@
     <% if alert %>
       <p class="alert alert-danger"><%= alert %></p>
     <% end %>
-    <div id="flash">
-      <% flash.each do |key, value| %>
-        <div class="flash <%= key %> alert-danger"><%= value %></div>
-      <% end %>
-    </div>
 
     <%= yield %>
     <%= render partial: 'shared/footer' %>

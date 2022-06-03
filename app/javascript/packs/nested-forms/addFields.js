@@ -1,3 +1,5 @@
+import priceUpdater from '../scripts/select'
+
 class addFields {
     // This executes when the function is instantiated.
     constructor() {
@@ -31,6 +33,8 @@ class addFields {
         let newFields = regexp ? link.dataset.fields.replace(regexp, time) : null
         // Add the new markup to the form if there are fields to add.
         newFields ? link.insertAdjacentHTML('beforebegin', newFields) : null
+
+        new priceUpdater()
     }
 }
 

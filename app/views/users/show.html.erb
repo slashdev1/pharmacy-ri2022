@@ -1,5 +1,4 @@
 <%= provide :page_title, @user.name %>
-<p id="notice"><%= notice %></p>
 
 <p>
   <strong>Ім'я:</strong>
@@ -8,7 +7,7 @@
 
 <p>
   <strong>Роль:</strong>
-  <%= @user.role %>
+  <%= role_fmt(@user.role) %>
 </p>
 
 <p>
@@ -18,8 +17,53 @@
 
 <p>
   <strong>Дата реєстрації:</strong>
-  <%= @user.created_at %>
+  <%= date_fmt(@user.created_at) %>
 </p>
 
-<%= link_to 'Edit', edit_user_path(@user) %> |
-<%= link_to 'Back', users_path %>
+<% if policy(@user).edit? %>
+  <%= link_to 'Редагувати', edit_user_path(@user) %> |
+<% end %>
+<%= link_to 'Назад', users_path %>
+
+<% if current_user.is_doctor? %>
+  <hr>
+  <h2>Зароблені гроші</h2>
+  <p>
+    <strong>Ваш відсоток від продажу:</strong>
+    <%= SalaryCalculator::SALES_PERCENTAGE %>%
+  </p>
+  <p>
+    <strong>Сума:</strong>
+    <%= price_fmt(SalaryCalculator.salary_total(current_user))%>
+  </p>
+<% end %>
+
+<hr>
+<h2>Мої замовлення</h2>
+<% orders = orders = policy_scope(Order) %>
+<% if orders.count == 0 %>
+  <p>Ще немає жодного</p>
+<% else %>
+  <table>
+    <thead>
+    <tr>
+      <th>Номер</th>
+      <th>Статус</th>
+      <th>Сума</th>
+      <th colspan="1"></th>
+    </tr>
+    </thead>
+
+    <tbody>
+    <% orders.each do |order| %>
+      <tr>
+        <td><%= order.id %></td>
+        <% # Problem: can't use this statement: order.order_status.name %>
+        <td><%= OrderStatus.find(order.order_status_id).name %></td>
+        <td><%= price_fmt(order.amount) %></td>
+        <td><%= link_to 'Показати', order %></td>
+      </tr>
+    <% end %>
+    </tbody>
+  </table>
+<% end %>

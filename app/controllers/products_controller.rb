@@ -1,58 +1,55 @@
 class ProductsController < ApplicationController
   before_action :set_product, only: [:show, :edit, :update, :destroy]
+  before_action :authorize_product!
 
-  # GET /products
   def index
-    @products = Product.all
+    @products = Product.with_stock.ordered_by_name
   end
 
-  # GET /products/1
   def show
   end
 
-  # GET /products/new
   def new
     @product = Product.new
   end
 
-  # GET /products/1/edit
   def edit
   end
 
-  # POST /products
   def create
     @product = Product.new(product_params)
 
     if @product.save
-      redirect_to @product, notice: 'Product was successfully created.'
+      redirect_to @product, notice: 'Ліки були успішно створені.'
     else
       render :new
     end
   end
 
-  # PATCH/PUT /products/1
   def update
     if @product.update(product_params)
-      redirect_to @product, notice: 'Product was successfully updated.'
+      redirect_to @product, notice: 'Ліки були успішно оновлені.'
     else
       render :edit
     end
   end
 
-  # DELETE /products/1
   def destroy
     @product.destroy
-    redirect_to products_url, notice: 'Product was successfully destroyed.'
+    redirect_to products_url, notice: 'Ліки були успішно видалені.'
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_product
-      @product = Product.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def product_params
-      params.fetch(:product, {}).permit(:name, :price, :required_prescription, :for_adult_children)
-    end
+  def set_product
+    @product = Product.find(params[:id])
+  end
+
+  def product_params
+    params.fetch(:product, {}).permit(:name, :price, :required_prescription, :for_adult_children, :description, :img_url)
+  end
+
+  def authorize_product!
+    authorize(@product || Product)
+  end
 end

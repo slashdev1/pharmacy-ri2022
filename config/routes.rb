@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  get 'about/index'
   devise_for :users
   resources :users
   resources :orders
@@ -8,5 +9,6 @@ Rails.application.routes.draw do
   get 'home/index'
 
   root 'home#index'
-  # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
+
+  match '*unmatched', to: 'application#route_not_found', via: :all
 end

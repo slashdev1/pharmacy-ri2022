@@ -1,23 +1,24 @@
-<%#= f.label :product_id %>
-<%#= f.select :product_id, options_for_select(Product.all.map {|key| [key.name, key.id]}, :product_id) %>
-
-<%#= link_to_add_fields 'Add Product', f, :order_details %>
 <div class="nested-fields">
   <%= f.hidden_field :_destroy %>
-  <div>
-    <%= f.label :product_id %>
-    <%= f.select :product_id, options_for_select(Product.all.map {|key| [key.name, key.id]}, :product_id) %>
+  <div class="field">
+    <%= f.label "Назва ліків", {:class => 'lbl'} %>
+    <% product_list = Product.all.map {|key| [key.name, key.id]} %>
+    <% product_list.unshift(['-- Виберіть ліки --', 0]) %>
+    <%= f.select :product_id, options_for_select(product_list, f.object.product_id) %>
   </div>
-  <div>
-    <%= f.label :qty %>
-    <%= f.text_field :qty %>
+  <div class="field">
+    <%= f.label "Кількість", {:class => 'lbl'} %>
+    <%= f.number_field :qty, value: f.object.qty || 1, step: 1 %>
+  </div class="field">
+  <div class="field">
+    <%= f.label "Ціна", {:class => 'lbl'} %>
+    <%= f.number_field :price, value: number_to_currency(f.object.price.to_f, delimiter: '', unit: ''), step: :any, disabled: !true %>
   </div>
-  <div>
-    <%= f.label :price %>
-    <%= f.text_field :price %>
+  <div class="field">
+    <%= f.label "Номер рецепта", {:class => 'lbl'} %>
+    <%= f.text_field :prescription_number %>
   </div>
-  <div>
-    <%= link_to "Remove", '#', class: "remove_fields" %>
+  <div class="field">
+    <%= link_to "Видалити", '#', class: "remove_fields" %>
   </div>
 </div>
-<% # Problem: if order exist this code make dupes of details %>

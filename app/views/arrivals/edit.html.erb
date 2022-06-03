@@ -1,6 +1,7 @@
-<h1>Editing Arrival</h1>
+<%= provide :page_title, "Надходження №#{@arrival.id}" %>
+<h1>Редагування надходження<%= " №#{@arrival.id}" %></h1>
 
 <%= render 'form', arrival: @arrival %>
 
-<%= link_to 'Show', @arrival %> |
-<%= link_to 'Back', arrivals_path %>
+<%= link_to 'Показати', @arrival %> |
+<%= link_to 'Назад', arrivals_path %>
